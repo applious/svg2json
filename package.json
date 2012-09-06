@@ -1,0 +1,8 @@
+{
+  "name": "svg2json",
+  "version": "0.0.1",
+  "dependencies": {
+    "xml2js": "*",
+    "simply-deferred": "git://github.com/sudhirj/simply-deferred.git"
+  }
+}
