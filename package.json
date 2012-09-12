@@ -1,8 +1,12 @@
 {
   "name": "svg2json",
   "version": "0.0.1",
+  "bin": "./bin/svg2json",
+  "directories": {
+    "bin": "./bin"
+  },
   "dependencies": {
     "xml2js": "*",
-    "simply-deferred": "git://github.com/sudhirj/simply-deferred.git"
+    "simply-deferred": "*"
   }
 }

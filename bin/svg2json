@@ -1,10 +1,10 @@
+#!/usr/bin/env coffee
+
 fs = require 'fs'
 xml2js = require 'xml2js'
 util = require 'util'
 
 { Deferred } = require 'simply-deferred'
-
-option '-i', '--input [PATH]', 'path for svg'
 
 deferredCallback = (deferred) ->
   (err, result) ->
@@ -70,21 +70,21 @@ parse = (path) ->
 
   return vertices
 
-task 'svg2json', 'parse an svg file into json', (options) ->
-  readFile(options.input).pipe(toString).done (svg) ->
-    console.log svg
-    svg2json(svg).done (json) ->
-      paths = []
+inputPath = process.argv[-1..][0]
 
-      for shapeType, shapes of json
-        unless shapeType is 'path'
-          continue
+readFile(inputPath).pipe(toString).done (svg) ->
+  svg2json(svg).done (json) ->
+    paths = []
 
-        unless Array.isArray(shapes)
-          paths.push(parse(shapes['@'].d))
-          return
+    for shapeType, shapes of json
+      unless shapeType is 'path'
+        continue
 
-        for shape in shapes
-          paths.push(parse(shape['@'].d))
+      unless Array.isArray(shapes)
+        paths.push(parse(shapes['@'].d))
+        return
 
-      console.log JSON.stringify(paths: paths, null, 2)
+      for shape in shapes
+        paths.push(parse(shape['@'].d))
+
+    console.log JSON.stringify(paths: paths, null, 2)
